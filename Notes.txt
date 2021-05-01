@@ -1,0 +1,54 @@
+//Notes
+
+
+
+//1. Functions group multiple lines of code together under a single name 
+//2. When you run a function, you can provide a function with data (the Domain)
+
+
+//add a todo
+//----
+
+function add() {
+  todos.push('another item');
+  console.log(todos);
+}
+
+//The Above does not use characteristic 2 of functions 
+
+function add(todoItem) {
+  todos.push(todoItem);
+  console.log(todos);
+}
+
+function add(todoList, todoItem) {
+  todoList.push(todoItem);
+  console.log(todoList);
+}
+
+//----
+
+
+//Version 4 toggle Gordon Made 
+
+function toggle (position){
+  if (todos[position].completed === false) {
+    todos[position].completed = true;
+  }
+  else {
+    todos[position].completed = false;
+  }
+}
+
+
+
+function function1(inputFunction, inputString) {  
+  return inputFunction(inputString);
+}
+
+function function2(thing) {
+  return thing;
+}
+
+var experiment = function1(function2, 'yolo');
+

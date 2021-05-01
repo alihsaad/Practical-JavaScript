@@ -1,0 +1,65 @@
+Version 12
+[x]Each todo should have its own edit button.
+[x]The edit buttons should actually work. 
+
+Version 11 
+[x]Each todo should have its own toggle button.
+[x]The toggle buttons should actually work.
+
+
+Version 10 
+[x] Each todo should have its own remove button. 
+[x] The remove buttons should work. 
+
+Version 9 
+[x] There should be an li for each todo
+[x] Each li should show the todoText property
+
+
+Version 8 (More Buttons!) 
+[x] add
+[x] edit 
+[x] remove 
+[x] toggle 
+
+Version 7 
+[x] It should have a displayTodos button.
+[x] The DisplayTodos button should run the displayTodos function.
+[x] It should have a toggleAll button.
+[x] the toggleAll button should run the toggleAll function.
+
+Version 6
+[x] it should have a function for toggling all todos. 
+[x]if all false => make all true
+[x]if mixed => make all true 
+[x]if all true => make all false 
+
+
+
+Version 5
+[x] It should have a function for displaying todos.
+[x] displayTodos should show the todoText and completed properties.
+
+
+Version 4
+[x] It should have a function to toggle a todo.
+
+
+Version 3
+[x] Initialize todos with objects
+[x] The add function should add objects 
+[x] The edit function should edit objects
+
+
+Version 2 (function-based)
+[x] It should have a function to add a todo
+[x] It should have a function to edit a todo 
+[x] It should have a function to remove a todo
+
+
+Version 1
+[x] It should have a place to store todos   (var todos)
+[x] It should have a way to display todos   (console.log(todos) this dont make sense)
+[x] It should have a way to add a todo      (todos.push("item x"))
+[x] It should have a way to edit a todo     (todos[x] = "item x updated")
+[x] It should have a way to remove a todo   (todos.splice)

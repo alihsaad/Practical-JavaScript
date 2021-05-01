@@ -1,0 +1,189 @@
+<!DOCTYPE html>   <!-- this tag tells the browser that this is an html file -->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Practical JavaScript</title>
+  </head>
+
+  <body>
+
+    <button id="toggle-all-button">      Toggle all</button>
+
+
+    <button id="add-button">Add</button>
+    <input type="text" id="add-input">  <!--type = "text" is the default type-->
+    
+
+    <ul id = 'todos-ul'></ul> 
+
+    <script>
+      const todos = [
+        {todoText: 'Do laundry', completed: false},
+        {todoText: 'Do dishes', completed: false},
+        {todoText: 'get groceries', completed: false}  
+      ];
+
+      function displayTodos(){
+        todosUl.innerHTML = ''
+        let todosLi;
+        let removeButton; 
+        let completed;
+        let toggleButton;
+        for (let i = 0; i < todos.length; i++) {
+          todosLi = document.createElement('li');
+
+          removeButton = document.createElement('button');
+          removeButton.innerText = "remove";
+          removeButton.id = 'remove-button-' + i
+          removeButton.addEventListener('click', remove)
+
+          toggleButton = document.createElement('button');
+          toggleButton.innerText = "toggle";
+          toggleButton.id = 'toggle-button-' + i
+          toggleButton.addEventListener('click', toggle)
+
+          editButton = document.createElement('button');
+          editButton.innerText = 'edit';
+          editButton.id = 'edit-button-' + i;
+          editButton.addEventListener('click',edit);
+
+          if (todos[i].completed === true){
+            completed = "[X]  "
+          }
+          else {completed = "[ ]  "}
+          todosLi.innerText = completed + todos[i].todoText + "\n";
+
+          // todosUl.appendChild(todosLi);
+          // todosUl.appendChild(toggleButton);
+          // todosUl.appendChild(removeButton);
+          // todosUl.appendChild(editButton);
+
+          // different style
+          todosLi.appendChild(toggleButton);
+          todosLi.appendChild(removeButton);
+          todosLi.appendChild(editButton);
+          todosUl.appendChild(todosLi);
+          
+        }
+      }
+
+      function add() {
+        let initialTodoText = addInput.value;
+        todos.push({todoText: initialTodoText, completed: false});
+        displayTodos();
+        addInput.value = "";
+
+      }
+
+
+      function edit(event) {
+        let index = event.target.id.split('-')[2];
+
+        //this block of code ensures our edit input is a singleton by
+        //adding it to a class and making sure its size is >=1
+        editInputClass = document.getElementsByClassName('edit-buttons');
+         if (editInputClass.length > 0){
+           singletonID = editInputClass[0].id; 
+          document.getElementById(singletonID).remove();
+         }
+
+        //creating input element and adding id/class 
+        editInput = document.createElement('input');
+        editInput.id = 'edit-input-' + index
+        editInput.className = 'edit-buttons';
+
+        event.target.after(editInput); //adding our edit input after our edit button 
+
+        //this eventListener function will look for Enter keypress then edit the value of our chosen todo
+        editInput.addEventListener('keydown', (e) => {
+          console.log(e)
+          if (e.key === 'Enter' && editInput.value != ""){
+
+            todos[index].todoText = editInput.value;
+            displayTodos();
+          }
+        });
+
+      }
+
+      function toggle(event) {
+        let id = event.target.id
+        let idArray = id.split('-')
+        let index = idArray[2]
+        todos[index].completed = !todos[index].completed;
+        displayTodos();
+      }
+
+      function remove(event){
+        let id = event.target.id //currentTarget might be a better property to use here?? (target picks child while currTarget picks parent)
+        let index = id.split('-')[2];
+        todos.splice(index,1);         // .splice(i,x) removes x items starting at the ith index
+        displayTodos();
+      }
+
+      function toggleAll() {
+        //first we check if any are false ( if we find one then we make all true )
+        let markCompleted = false;
+
+        for (let i = 0; i < todos.length; i++) { // we check if any are not completed (false)
+          if (todos[i].completed === false){     // if one of them is not completed (false), we are making all completed (true)
+            markCompleted = true;                //this variable being marked true tells us that we are turning all true
+          }                                      // if it isnt marked true then we know theyre all completed 
+        }
+        for (let i = 0; i < todos.length; i++) {
+          todos[i].completed = markCompleted;  //here this variable will be false if we need to toggle all to false and vice versa 
+        }
+        
+        displayTodos();
+      }
+
+
+
+
+      
+      let toggleAllButton = document.getElementById("toggle-all-button");
+      toggleAllButton.addEventListener('click', toggleAll); 
+
+
+      let addButton = document.getElementById('add-button');
+      let addInput = document.getElementById('add-input');
+      addButton.addEventListener('click', add)
+      addInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && addInput.value != ""){
+        add();
+      }
+    });
+
+
+      let todosUl = document.getElementById('todos-ul');
+
+      displayTodos(); // this prints shit into the console in the browser
+    </script>
+  </body>
+</html>
+
+
+
+<!--this is how you write a comment in html -->
+
+<!-- <blah></blah> these are called 'blah' opening and closing tags (not all tags come in pairs, ex. the doctype above)-->
+
+<!-- We are making a todo list and we need five main features
+  
+  1.Creating an item
+  2.Toggling a single item (completed/active)
+  3.Toggling everything at once
+  4.Edit an item 
+  5.Delete an item
+
+This is based on this particular todo list https://todomvc.com/examples/vanillajs/#/
+But, it is going to be uglier (lets make it prettier with CSS later)
+
+Optional Features: 
+  -- number of items to be completed
+  -- All/Active/Completed tabs
+  -- Clear completed button 
+  -- local storage of the todo list 
+
+-->
