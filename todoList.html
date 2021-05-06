@@ -4,18 +4,22 @@
   <head>
     <meta charset="utf-8">
     <title>Practical JavaScript</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
 
   <body>
+    <div class="top-ui">
+      <i class="far fa-check-square"></i>
+      <button id="toggle-all-button">      Toggle all</button>
 
-    <button id="toggle-all-button">      Toggle all</button>
 
+      <button id="add-button">Add</button>
+      <input type="text" id="add-input">  <!--type = "text" is the default type-->
+    </div>
 
-    <button id="add-button">Add</button>
-    <input type="text" id="add-input">  <!--type = "text" is the default type-->
-    
-
-    <ul id = 'todos-ul'></ul> 
+    <div class="todos-container">
+      <ul id = 'todos-ul'></ul> 
+    </div>  
 
     <script>
       const todos = [
@@ -30,6 +34,7 @@
         let removeButton; 
         let completed;
         let toggleButton;
+        let checkmark;
         for (let i = 0; i < todos.length; i++) {
           todosLi = document.createElement('li');
 
@@ -47,12 +52,24 @@
           editButton.innerText = 'edit';
           editButton.id = 'edit-button-' + i;
           editButton.addEventListener('click',edit);
+          
+
+          checkmark = document.createElement('img');
+          // checkmark.alt = 'checkmark';
 
           if (todos[i].completed === true){
-            completed = "[X]  "
+            // completed = "[X]  "
+            // todosLi.style.backgroundImage = 'bx-checkbox.svg';
+            checkmark.src = 'images/bx-check-square.svg';
           }
-          else {completed = "[ ]  "}
-          todosLi.innerText = completed + todos[i].todoText + "\n";
+          else {
+            // completed = "[ ]  "
+            checkmark.src = 'images/bx-checkbox.svg';
+            // todosLi.style.backgroundImage = 'bx-checkbox.svg';
+          }
+          // todosLi.innerText = completed + todos[i].todoText + "\n";  //\n to not clutter the todo line with buttons 
+          todosLi.innerText = todos[i].todoText;
+
 
           // todosUl.appendChild(todosLi);
           // todosUl.appendChild(toggleButton);
@@ -60,6 +77,8 @@
           // todosUl.appendChild(editButton);
 
           // different style
+          todosLi.appendChild(checkmark);
+          todosLi.appendChild(document.createElement('br'));
           todosLi.appendChild(toggleButton);
           todosLi.appendChild(removeButton);
           todosLi.appendChild(editButton);
@@ -82,16 +101,20 @@
 
         //this block of code ensures our edit input is a singleton by
         //adding it to a class and making sure its size is >=1
-        editInputClass = document.getElementsByClassName('edit-buttons');
-         if (editInputClass.length > 0){
-           singletonID = editInputClass[0].id; 
-          document.getElementById(singletonID).remove();
+        editInputClass = document.getElementsByClassName('edit-inputs');
+          if (editInputClass.length > 0){
+            singletonID = editInputClass[0].id; 
+            document.getElementById(singletonID).remove();
+            if (index === singletonID.split('-')[2]){
+              //displayTodos(); not sure if necessary 
+              return
+            } 
          }
 
         //creating input element and adding id/class 
         editInput = document.createElement('input');
         editInput.id = 'edit-input-' + index
-        editInput.className = 'edit-buttons';
+        editInput.className = 'edit-inputs';
 
         event.target.after(editInput); //adding our edit input after our edit button 
 
@@ -106,6 +129,8 @@
         });
 
       }
+
+
 
       function toggle(event) {
         let id = event.target.id
@@ -158,7 +183,7 @@
 
       let todosUl = document.getElementById('todos-ul');
 
-      displayTodos(); // this line will trigger the display function and render everything onto the browser. 
+      displayTodos(); // this prints shit into the console in the browser
     </script>
   </body>
 </html>
